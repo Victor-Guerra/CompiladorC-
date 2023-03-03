@@ -1,0 +1,37 @@
+method runDfa( text, tt ) {
+    state = 0
+    word = ""
+    char = ''
+
+    while state is not accepting AND state is not error {
+
+        if text == "" {
+            break
+        }
+        
+        char = text.nextchar()
+        transition = tt [ char ][ state ]
+
+        if transition.isConsuming {
+            state = transition.target
+            continue
+        }
+        else {
+            text.prepend( char )
+            if char == BLANK {
+                state = transition.target
+                continue
+            }
+            else {
+                word = word.append( char )
+                state = transition.target
+                continue
+            }
+        }
+    }
+    
+    return ( state, word )
+}
+
+
+
